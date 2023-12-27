@@ -1,0 +1,8 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/pageSecond",
+    "pages/Scenario_1/index",
+    "pages/Scenario_1/detail"
+  ]
+}
