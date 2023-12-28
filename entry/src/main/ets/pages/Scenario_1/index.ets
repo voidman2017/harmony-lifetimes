@@ -6,7 +6,7 @@ import PageContainer from '../Components/PageContainer'
 @Entry
 @Component
 struct Index {
-  @State pageName: string = 'home(主页)';
+  @State pageName: string = "pages/Scenario_1/index";
   @State description: string = `
   【场景1: pushUrl[Standard]】
   有一个主页（Home）和一个详情页（Detail），希望从主页点击一个商品，跳转到详情页。同时，需要保留主页在页面栈中，以便返回时恢复状态。这种场景下，可以使用pushUrl()方法，并且使用Standard实例模式（或者省略）。

@@ -6,7 +6,7 @@ import { route } from './utils/router'
 @Entry
 @Component
 struct Index {
-  @State pageName: string = 'page Second';
+  @State pageName: string = 'pages/pageSecond';
   @State description: string = '';
 
   @Builder

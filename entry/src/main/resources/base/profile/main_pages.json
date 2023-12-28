@@ -3,6 +3,8 @@
     "pages/Index",
     "pages/pageSecond",
     "pages/Scenario_1/index",
-    "pages/Scenario_1/detail"
+    "pages/Scenario_1/detail",
+    "pages/Scenario_2/login",
+    "pages/Scenario_2/userInfo"
   ]
 }
