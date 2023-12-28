@@ -1,11 +1,13 @@
-import PageContainer from '../Components/PageContainer'
+import PageContainer from '../../Components/PageContainer'
 import hilog from '@ohos.hilog';
-import { route } from '../utils/router'
+import { route } from '../../utils/router'
 
 
 @Entry
 @Component
 struct Login {
+  @Provide _onPageShow: number = 0
+  @Provide _onPageHide: number = 0
   @State pageName: string = 'pages/Scenario_2/login';
   @State userName: string = ''
   @State password: string = ''
@@ -13,7 +15,6 @@ struct Login {
   @Builder
   pageContent() {
     Column() {
-      Text(this.userName)
       TextInput({
         placeholder: '用户名',
         text: $$this.userName,
@@ -49,26 +50,28 @@ struct Login {
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onPageShow() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' OnPageShow');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', this.pageName + ' OnPageShow');
+    this._onPageShow = Date.now()
   }
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onPageHide() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' OnPageHide');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', this.pageName + ' OnPageHide');
+    this._onPageHide = Date.now()
   }
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onBackPress() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' OnBackPress');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', this.pageName + ' OnBackPress');
   }
 
   // 组件生命周期
   aboutToAppear() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' aboutToAppear');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', this.pageName + ' aboutToAppear');
   }
 
   // 组件生命周期
   aboutToDisappear() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' aboutToDisappear');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', this.pageName + ' aboutToDisappear');
   }
 }

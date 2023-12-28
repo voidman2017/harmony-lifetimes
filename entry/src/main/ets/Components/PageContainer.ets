@@ -3,18 +3,27 @@ import router from '@ohos.router';
 import HttpCapath from './http-capath'
 import CompCounter from './Counter'
 import { route } from '../utils/router'
+
 @Component
 export default struct PageContainer {
-  @Prop pageName: string = 'page index';
+  @Prop pageName: string = 'Component PageContainer';
+  @Consume @Watch("onPageShow") _onPageShow?: number;
+  @Consume @Watch("onPageHide") _onPageHide?: number;
   @Prop description: string = '';
   @BuilderParam pageContent?: () => void;
   @State value: number = 0
+  @State routeLength: string = '0'
+
+  updateRoutesLength() {
+    const length: string = router.getLength()
+    this.routeLength = length
+  }
 
   build() {
     Column() {
       Column() {
         Row() {
-          if (Number(router.getLength()) <= 1) {
+          if (Number(this.routeLength) <= 1) {
             Text()
           } else {
             Image($r("app.media.backIcon")).onClick(() => {
@@ -24,6 +33,7 @@ export default struct PageContainer {
           Text(this.pageName)
             .fontSize(24)
             .fontWeight(FontWeight.Bold)
+
           Text()
         }
         .justifyContent(FlexAlign.SpaceBetween)
@@ -32,6 +42,16 @@ export default struct PageContainer {
         .padding(20)
 
         Text(this.description)
+
+        Text('the number of pages in the current stack： ' + this.routeLength).onClick(() => {
+          const length: string = router.getLength()
+          this.routeLength = length
+        })
+          .margin(5)
+          .fontStyle(FontStyle.Italic)
+
+        // HttpCapath()
+
         Counter() {
           Text(this.value.toString())
         }.onInc(() => {
@@ -55,26 +75,28 @@ export default struct PageContainer {
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onPageShow() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' pageContainer OnPageShow');
+    this.updateRoutesLength()
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', "Component PageContainer in " + this.pageName + ' OnPageShow');
   }
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onPageHide() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' pageContainer OnPageHide');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', "Component PageContainer in " + this.pageName + ' OnPageHide');
   }
 
   // 只有被@Entry装饰的组件才可以调用页面的生命周期
   onBackPress() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + ' pageContainer OnBackPress');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', "Component PageContainer in " + this.pageName + ' OnBackPress');
   }
 
   // 组件生命周期
   aboutToAppear() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + 'pageContainer aboutToAppear');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', "Component PageContainer in " + this.pageName + ' aboutToAppear');
+    this.updateRoutesLength()
   }
 
   // 组件生命周期
   aboutToDisappear() {
-    hilog.info(0x0000, 'testTag', '%{public}s', this.pageName + 'pageContainer aboutToDisappear');
+    hilog.info(0x0000, 'lifetimes-log', '%{public}s', "Component PageContainer in " + this.pageName + ' aboutToDisappear');
   }
 }
